@@ -19,12 +19,12 @@ public class App {
         basket.addProduct(product5);
         basket.addProduct(product6); // не добавляется видно на выводе
         basket.printBasket();
-        System.out.println(("Итого: " + basket.costBasket()));
-        basket.nameProduct("Мяч");
-        basket.nameProduct("Курица");
+        System.out.println(("Итого: " + basket.getTotalCost()));
+        basket.productExist("Мяч");
+        basket.productExist("Курица");
         basket.removeAllProduct();
         basket.printBasket();
-        System.out.println(("Итого: " + basket.costBasket()));
-        basket.nameProduct("Курица");
+        System.out.println(("Итого: " + basket.getTotalCost()));
+        basket.productExist("Курица");
     }
 }

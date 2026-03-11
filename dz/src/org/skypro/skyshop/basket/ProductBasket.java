@@ -9,37 +9,30 @@ public class ProductBasket {
     }
 
     public void addProduct(Product newProduct) {
-        boolean added = false;
-        for (int i = 0; i < this.product.length; i++) {
-            if (this.product[i] == null) {
-                this.product[i] = newProduct;
-                added = true;
+        for (int i = 0; ; i++) {
+            if (i < product.length &&  product[i] == null) {
+                product[i] = newProduct;
                 break;
             }
-        } if (!added) {
-            System.out.println("Product not added");
+            if (i > product.length) {
+                System.out.println("Невозможно добавить продукт");
+                break;
+            }
         }
     }
-
     public void printBasket() {
-        boolean isEmpty = true;
+        int count = 0;
         for (Product productBasket : product) {
             if (productBasket != null) {
-                isEmpty = false;
-                break;
+                count++;
+                System.out.println(productBasket);
             }
         }
-        if (isEmpty) {
+        if (count ==  0) {
             System.out.println("В корзине пусто");
-        } else {
-            for (Product productBasket : product) {
-                if (productBasket != null) {
-                    System.out.println(productBasket);
-                }
-            }
         }
     }
-    public int costBasket() {
+    public int getTotalCost() {
         int price = 0;
         for (int i = 0; i < product.length; i++) {
             if (product[i] != null) {
@@ -48,7 +41,7 @@ public class ProductBasket {
         }
         return price;
     }
-    public boolean nameProduct(String productName) {
+    public boolean productExist(String productName) {
         for (Product productBasket : product) {
             if (productBasket != null && productBasket.getProductName().equals(productName)) {
                 System.out.println(true);
