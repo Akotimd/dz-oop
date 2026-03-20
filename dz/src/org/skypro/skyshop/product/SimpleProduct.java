@@ -11,4 +11,14 @@ public class SimpleProduct extends Product {
     public double getPrice() {
         return price;
     }
+
+    @Override
+    public boolean isSpecial() {
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return getProductName() + ": " + getPrice();
+    }
 }

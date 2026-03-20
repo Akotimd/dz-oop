@@ -10,7 +10,7 @@ public class ProductBasket {
 
     public void addProduct(Product newProduct) {
         for (int i = 0; ; i++) {
-            if (i < product.length &&  product[i] == null) {
+            if (i < product.length && product[i] == null) {
                 product[i] = newProduct;
                 break;
             }
@@ -20,6 +20,7 @@ public class ProductBasket {
             }
         }
     }
+
     public void printBasket() {
         int count = 0;
         for (Product productBasket : product) {
@@ -28,10 +29,13 @@ public class ProductBasket {
                 System.out.println(productBasket);
             }
         }
-        if (count ==  0) {
+        if (count == 0) {
             System.out.println("В корзине пусто");
         }
+        System.out.println("Итого: " + getTotalCost());
+        System.out.println("Специальных товаров: " + isSpecialProduct());
     }
+
     public int getTotalCost() {
         int price = 0;
         for (int i = 0; i < product.length; i++) {
@@ -41,6 +45,7 @@ public class ProductBasket {
         }
         return price;
     }
+
     public boolean productExist(String productName) {
         for (Product productBasket : product) {
             if (productBasket != null && productBasket.getProductName().equals(productName)) {
@@ -51,10 +56,21 @@ public class ProductBasket {
         System.out.println(false);
         return false;
     }
+
     public void removeAllProduct() {
         for (int i = 0; i < product.length; i++) {
             product[i] = null;
         }
+    }
+
+    public int isSpecialProduct() {
+        int countIsSpec = 0;
+        for (Product productIsSpecial : product) {
+            if (productIsSpecial != null && productIsSpecial.isSpecial()) {
+                countIsSpec++;
+            }
+        }
+        return countIsSpec;
     }
 }
 
