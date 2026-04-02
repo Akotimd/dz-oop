@@ -32,15 +32,15 @@ public class ProductBasket {
         if (count == 0) {
             System.out.println("В корзине пусто");
         }
-        System.out.println("Итого: " + getTotalCost());
+        System.out.println(String.format("Итого: %.2f ", getTotalCost()));
         System.out.println("Специальных товаров: " + isSpecialProduct());
     }
 
-    public int getTotalCost() {
-        int price = 0;
-        for (int i = 0; i < product.length; i++) {
-            if (product[i] != null) {
-                price += product[i].getPrice();
+    public double getTotalCost() {
+        double price = 0;
+        for (double i = 0; i < product.length; i++) {
+            if (product[(int) i] != null) {
+                price += product[(int) i].getPrice();
             }
         }
         return price;

@@ -1,6 +1,7 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.article.Article;
+import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
@@ -12,18 +13,31 @@ import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
-        Product chocolate = new SimpleProduct("Шоколад", 20);
+        ProductBasket productBasket = new ProductBasket();
+
         Product ball = new FixPriceProduct("Мяч");
-        Product coat = new DiscountedProduct("Пальто", 40, 10);
+        Product coat = new DiscountedProduct("Пальто", 40, 90);
         Product sword = new DiscountedProduct("Меч", 100, 10);
         Product lock = new SimpleProduct("Замок", 60);
+
         Article chocolateArtc = new Article("Вкусный чоколад", "Ну просто обьеденье");
         Article ballArtc = new Article("Мяч", "Упругий мячик");
         Article swordArtc = new Article("Меч", "Острый как бритва меч");
+        try {
+            Product chocolate = new DiscountedProduct("Шоколад", -1, 101);
+            System.out.println("Всё норм");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при добавлении товара");
+        }
+
+        productBasket.addProduct(ball);
+        productBasket.addProduct(coat);
+        productBasket.addProduct(sword);
+        productBasket.addProduct(lock);
+        productBasket.printBasket();
 
         SearchEngine searchEngine = new SearchEngine(10);
 
-        searchEngine.add(chocolate);
         searchEngine.add(ball);
         searchEngine.add(coat);
         searchEngine.add(sword);
@@ -41,7 +55,6 @@ public class App {
         Searchable[] test3 = searchEngine.search("Меч");
         System.out.println(Arrays.toString(test3));
 
-        System.out.println(chocolate.getStringRepresentation());
         System.out.println(ballArtc.getStringRepresentation());
     }
 }

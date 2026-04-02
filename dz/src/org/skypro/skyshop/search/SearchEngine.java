@@ -22,6 +22,23 @@ public class SearchEngine {
         return result;
     }
 
+    public Searchable findSearchable(String search) {
+        Searchable bestResult = null;
+        int maxOccurrences = 0;
+        for (Searchable searchable : searchables) {
+            if (searchable == null) continue;
+            String text = searchable.getSearchTerms().toLowerCase();
+            String target = search.toLowerCase();
+            int count = 0;
+            int index = 0;
+
+            while ((index = text.indexOf(target, index)) != -1) {
+                count++;
+                index += target.length();
+            }
+        }
+        return bestResult;
+    }
     public void add(Searchable searchable) {
         int freeIndex = getFreeIndex();
         if (freeIndex < -1) {
