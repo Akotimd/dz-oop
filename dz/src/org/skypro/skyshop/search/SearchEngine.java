@@ -22,13 +22,17 @@ public class SearchEngine {
         return result;
     }
 
-    public Searchable findSearchable(String search) {
+    public Searchable findSearchable(String search) throws BestResultNotFound {
+        if (search == null || search.isEmpty()) {
+            throw new BestResultNotFound(search);
+        }
         Searchable bestResult = null;
         int maxOccurrences = 0;
+        String target = search.toLowerCase();
+
         for (Searchable searchable : searchables) {
             if (searchable == null) continue;
             String text = searchable.getSearchTerms().toLowerCase();
-            String target = search.toLowerCase();
             int count = 0;
             int index = 0;
 
@@ -36,6 +40,13 @@ public class SearchEngine {
                 count++;
                 index += target.length();
             }
+            if (count > maxOccurrences) {
+                maxOccurrences = count;
+                bestResult = searchable;
+            }
+        }
+        if (maxOccurrences <= 0) {
+            throw new BestResultNotFound(search);
         }
         return bestResult;
     }

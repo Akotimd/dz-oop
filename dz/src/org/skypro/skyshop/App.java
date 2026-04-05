@@ -6,6 +6,7 @@ import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
@@ -29,13 +30,6 @@ public class App {
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка при добавлении товара");
         }
-
-        productBasket.addProduct(ball);
-        productBasket.addProduct(coat);
-        productBasket.addProduct(sword);
-        productBasket.addProduct(lock);
-        productBasket.printBasket();
-
         SearchEngine searchEngine = new SearchEngine(10);
 
         searchEngine.add(ball);
@@ -47,14 +41,17 @@ public class App {
         searchEngine.add(ballArtc);
         searchEngine.add(swordArtc);
 
-
-        Searchable[] test1 = searchEngine.search("Мяч");
-        System.out.println(Arrays.toString(test1));
-        Searchable[] test2 = searchEngine.search("Острый");
-        System.out.println(Arrays.toString(test2));
-        Searchable[] test3 = searchEngine.search("Меч");
-        System.out.println(Arrays.toString(test3));
-
-        System.out.println(ballArtc.getStringRepresentation());
+        try {
+            Searchable found = searchEngine.findSearchable("Мяч");
+            System.out.println("Найден объект: " + found.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+        try {
+            Searchable found = searchEngine.findSearchable("gisdgfiosagj");
+            System.out.println("Найден объект: " + found.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
     }
 }
