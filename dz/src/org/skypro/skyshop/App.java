@@ -21,15 +21,18 @@ public class App {
         Product sword = new DiscountedProduct("Меч", 100, 10);
         Product lock = new SimpleProduct("Замок", 60);
 
+        productBasket.addProduct(ball);
+        productBasket.addProduct(coat);
+        productBasket.addProduct(sword);
+        productBasket.addProduct(lock);
+
+        productBasket.removeAllProduct();
+        productBasket.printBasket();
+
         Article chocolateArtc = new Article("Вкусный чоколад", "Ну просто обьеденье");
         Article ballArtc = new Article("Мяч", "Упругий мячик");
         Article swordArtc = new Article("Меч", "Острый как бритва меч");
-        try {
-            Product chocolate = new DiscountedProduct("Шоколад", -1, 101);
-            System.out.println("Всё норм");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка при добавлении товара");
-        }
+
         SearchEngine searchEngine = new SearchEngine(10);
 
         searchEngine.add(ball);
