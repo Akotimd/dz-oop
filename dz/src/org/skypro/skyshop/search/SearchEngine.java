@@ -1,22 +1,20 @@
 package org.skypro.skyshop.search;
 
-public class SearchEngine {
+import java.util.ArrayList;
+import java.util.List;
 
-    private final Searchable[] searchables;
+public class SearchEngine {
+    private ArrayList<Searchable> searchables;
 
     public SearchEngine(int capacity) {
-        this.searchables = new Searchable[capacity];
+        this.searchables = new ArrayList<>();
     }
 
-    public Searchable[] search(String query) {
-        Searchable[] result = new Searchable[5];
-        int count = 0;
+    public List<Searchable> search(String query) {
+        List<Searchable> result = new ArrayList<>();
         for (Searchable searchable : searchables) {
             if (searchable != null && searchable.getSearchTerms().contains(query)) {
-                result[count++] = searchable;
-                if (count >= 50) {
-                    break;
-                }
+                result.add(searchable);
             }
         }
         return result;
@@ -52,19 +50,19 @@ public class SearchEngine {
     }
     public void add(Searchable searchable) {
         int freeIndex = getFreeIndex();
-        if (freeIndex < -1) {
-            System.out.println("Невозможно добавить элемент для поиска");
-            return;
+        if (freeIndex == searchables.size()) {
+            searchables.add(searchable);
+        } else  {
+            searchables.set(freeIndex, searchable);
         }
-        searchables[freeIndex] = searchable;
     }
 
     public int getFreeIndex() {
-        for (int i = 0; i < searchables.length; i++) {
-            if (searchables[i] == null) {
+        for (int i = 0; i < searchables.size(); i++) {
+            if (searchables.get(i) == null) {
                 return i;
             }
         }
-        return 0;
+        return searchables.size();
     }
 }

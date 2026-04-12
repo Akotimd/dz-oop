@@ -2,6 +2,7 @@ package org.skypro.skyshop.basket;
 import org.skypro.skyshop.product.Product;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ProductBasket {
@@ -26,7 +27,7 @@ public class ProductBasket {
         if (count == 0) {
             System.out.println("В корзине пусто");
         }
-        System.out.println(String.format("Итого: %.2f ", getTotalCost()));
+        System.out.printf("Итого: %.2f %n", getTotalCost());
         System.out.println("Специальных товаров: " + isSpecialProduct());
     }
 
@@ -57,12 +58,20 @@ public class ProductBasket {
         }
     }
 
-//    public List removeProduct(Product name) {
-//        for (int i = 0; i < product.toArray().length; i++) {
-//
-//        }
-//        return
-//    }
+    public List<Product> removeProduct(String productName) {
+        ArrayList<Product> removesProduct = new ArrayList<>();
+        Iterator<Product> iterator = product.iterator();
+        while (iterator.hasNext()) {
+            Product currentProduct = iterator.next();
+            if (productName.equals(currentProduct.getProductName())) {
+                removesProduct.add(currentProduct);
+                iterator.remove();
+                System.out.println("Удалён продукт: " + currentProduct);
+            }
+        }
+//        if (removesProduct.isEmpty()) { System.out.println("Список пуст"); }
+        return removesProduct;
+    }
 
     public int isSpecialProduct() {
         int countIsSpec = 0;

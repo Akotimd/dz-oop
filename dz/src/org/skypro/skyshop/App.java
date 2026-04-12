@@ -10,24 +10,47 @@ import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.Arrays;
+import java.util.List;
+
 
 public class App {
     public static void main(String[] args) {
         ProductBasket productBasket = new ProductBasket();
 
-        Product ball = new FixPriceProduct("Мяч");
         Product coat = new DiscountedProduct("Пальто", 40, 90);
+        Product ball = new FixPriceProduct("Мяч");
         Product sword = new DiscountedProduct("Меч", 100, 10);
         Product lock = new SimpleProduct("Замок", 60);
 
-        productBasket.addProduct(ball);
         productBasket.addProduct(coat);
-        productBasket.addProduct(sword);
-        productBasket.addProduct(lock);
+        productBasket.addProduct(ball);
+        productBasket.addProduct(coat); // второе пальто
 
-        productBasket.removeAllProduct();
+        List<Product> remove = productBasket.removeProduct("Пальто");
+        if (remove.isEmpty()) {
+            System.out.println("Список пуст");
+        } else {
+            for (Product p : remove) {
+                System.out.println(p);
+            }
+        }
+        System.out.println("Содержимое корзины после удаления:");
         productBasket.printBasket();
+        System.out.println("=== Удаление несуществующего продукта ===");
+        productBasket.removeProduct("Rat");
+        System.out.println("Удалённые продукты:");
+        if (productBasket.removeProduct("Rat").isEmpty()) {
+            System.out.println("Список пуст");
+        } else {
+            for (Product p : productBasket.removeProduct("Rat")) {
+                System.out.println(p);
+            }
+        }
+
+        System.out.println("Содержимое корзины после удаления:");
+        productBasket.printBasket();
+
+
 
         Article chocolateArtc = new Article("Вкусный чоколад", "Ну просто обьеденье");
         Article ballArtc = new Article("Мяч", "Упругий мячик");
@@ -44,17 +67,22 @@ public class App {
         searchEngine.add(ballArtc);
         searchEngine.add(swordArtc);
 
-        try {
-            Searchable found = searchEngine.findSearchable("Мяч");
-            System.out.println("Найден объект: " + found.getStringRepresentation());
-        } catch (BestResultNotFound e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
-        try {
-            Searchable found = searchEngine.findSearchable("gisdgfiosagj");
-            System.out.println("Найден объект: " + found.getStringRepresentation());
-        } catch (BestResultNotFound e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
+        List<Searchable> found = searchEngine.search("Мяч");
+        List<Searchable> found1 = searchEngine.search("Меч");
+        System.out.println("Найдено: " + found);
+        System.out.println("Найдено: " + found1);
+
+//        try {
+//            Searchable found = searchEngine.findSearchable("Мяч");
+//            System.out.println("Найден объект: " + found.getStringRepresentation());
+//        } catch (BestResultNotFound e) {
+//            System.out.println("Ошибка: " + e.getMessage());
+//        }
+//        try {
+//            Searchable found = searchEngine.findSearchable("gisdgfiosagj");
+//            System.out.println("Найден объект: " + found.getStringRepresentation());
+//        } catch (BestResultNotFound e) {
+//            System.out.println("Ошибка: " + e.getMessage());
+//        }
     }
 }
