@@ -1,24 +1,19 @@
 package org.skypro.skyshop.basket;
 import org.skypro.skyshop.product.Product;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class ProductBasket {
-    private final Product[] product;
+    ArrayList<Product> product;
 
     public ProductBasket() {
-        this.product = new Product[5];
+        this.product = new ArrayList<>();
     }
 
     public void addProduct(Product newProduct) {
-        for (int i = 0; ; i++) {
-            if (i < product.length && product[i] == null) {
-                product[i] = newProduct;
-                break;
-            }
-            if (i > product.length) {
-                System.out.println("Невозможно добавить продукт");
-                break;
-            }
-        }
+        this.product.add(newProduct);
     }
 
     public void printBasket() {
@@ -32,15 +27,15 @@ public class ProductBasket {
         if (count == 0) {
             System.out.println("В корзине пусто");
         }
-        System.out.println(String.format("Итого: %.2f ", getTotalCost()));
+        System.out.printf("Итого: %.2f %n", getTotalCost());
         System.out.println("Специальных товаров: " + isSpecialProduct());
     }
 
     public double getTotalCost() {
         double price = 0;
-        for (double i = 0; i < product.length; i++) {
-            if (product[(int) i] != null) {
-                price += product[(int) i].getPrice();
+        for (double i = 0; i < product.toArray().length; i++) {
+            if (product.get((int) i) != null) {
+                price += product.get((int) i).getPrice();
             }
         }
         return price;
@@ -58,9 +53,24 @@ public class ProductBasket {
     }
 
     public void removeAllProduct() {
-        for (int i = 0; i < product.length; i++) {
-            product[i] = null;
+        for (int i = 0; i < product.toArray().length; i++) {
+            product.set(i, null);
         }
+    }
+
+    public List<Product> removeProduct(String productName) {
+        ArrayList<Product> removesProduct = new ArrayList<>();
+        Iterator<Product> iterator = product.iterator();
+        while (iterator.hasNext()) {
+            Product currentProduct = iterator.next();
+            if (productName.equals(currentProduct.getProductName())) {
+                removesProduct.add(currentProduct);
+                iterator.remove();
+                System.out.println("Удалён продукт: " + currentProduct);
+            }
+        }
+//        if (removesProduct.isEmpty()) { System.out.println("Список пуст"); }
+        return removesProduct;
     }
 
     public int isSpecialProduct() {
