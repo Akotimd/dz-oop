@@ -11,6 +11,7 @@ import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class App {
@@ -22,9 +23,11 @@ public class App {
         Product sword = new DiscountedProduct("Меч", 100, 10);
         Product lock = new SimpleProduct("Замок", 60);
 
-        productBasket.addProduct(coat);
-        productBasket.addProduct(ball);
-        productBasket.addProduct(coat); // второе пальто
+        productBasket.addProduct("Пальто", coat);
+        productBasket.addProduct("Мяч",ball);
+        productBasket.addProduct("Пальто", coat);
+        productBasket.addProduct("Меч", sword);
+        productBasket.addProduct("Замок", lock);
 
         List<Product> remove = productBasket.removeProduct("Пальто");
         if (remove.isEmpty()) {
@@ -67,8 +70,14 @@ public class App {
         searchEngine.add(ballArtc);
         searchEngine.add(swordArtc);
 
-        List<Searchable> found = searchEngine.search("Мяч");
-        List<Searchable> found1 = searchEngine.search("Меч");
+        Map<String, Searchable> found = searchEngine.search("Мяч");
+        for (String name : found.keySet()) {
+            Searchable item = found.get(name);
+        }
+        Map<String, Searchable> found1 = searchEngine.search("Меч");
+        for (String name : found.keySet()) {
+            Searchable item = found.get(name);
+        }
         System.out.println("Найдено: " + found);
         System.out.println("Найдено: " + found1);
 
