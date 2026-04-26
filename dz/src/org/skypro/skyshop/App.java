@@ -6,12 +6,12 @@ import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
-import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 public class App {
@@ -24,7 +24,7 @@ public class App {
         Product lock = new SimpleProduct("Замок", 60);
 
         productBasket.addProduct("Пальто", coat);
-        productBasket.addProduct("Мяч",ball);
+        productBasket.addProduct("Мяч", ball);
         productBasket.addProduct("Пальто", coat);
         productBasket.addProduct("Меч", sword);
         productBasket.addProduct("Замок", lock);
@@ -54,7 +54,6 @@ public class App {
         productBasket.printBasket();
 
 
-
         Article chocolateArtc = new Article("Вкусный чоколад", "Ну просто обьеденье");
         Article ballArtc = new Article("Мяч", "Упругий мячик");
         Article swordArtc = new Article("Меч", "Острый как бритва меч");
@@ -70,28 +69,9 @@ public class App {
         searchEngine.add(ballArtc);
         searchEngine.add(swordArtc);
 
-        Map<String, Searchable> found = searchEngine.search("Мяч");
-        for (String name : found.keySet()) {
-            Searchable item = found.get(name);
-        }
-        Map<String, Searchable> found1 = searchEngine.search("Меч");
-        for (String name : found.keySet()) {
-            Searchable item = found.get(name);
-        }
+        Set<Searchable> found = searchEngine.search("Мяч");
+        Set<Searchable> found1 = searchEngine.search("Меч");
         System.out.println("Найдено: " + found);
         System.out.println("Найдено: " + found1);
-
-//        try {
-//            Searchable found = searchEngine.findSearchable("Мяч");
-//            System.out.println("Найден объект: " + found.getStringRepresentation());
-//        } catch (BestResultNotFound e) {
-//            System.out.println("Ошибка: " + e.getMessage());
-//        }
-//        try {
-//            Searchable found = searchEngine.findSearchable("gisdgfiosagj");
-//            System.out.println("Найден объект: " + found.getStringRepresentation());
-//        } catch (BestResultNotFound e) {
-//            System.out.println("Ошибка: " + e.getMessage());
-//        }
     }
 }
