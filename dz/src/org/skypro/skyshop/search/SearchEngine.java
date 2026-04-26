@@ -1,22 +1,26 @@
 package org.skypro.skyshop.search;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class SearchEngine {
-    private ArrayList<Searchable> searchables;
+    private HashSet<Searchable> searchables;
 
     public SearchEngine(int capacity) {
-        this.searchables = new ArrayList<>();
+        this.searchables = new HashSet<>();
     }
 
-    public Map<String, Searchable> search(String query) {
-        Map<String, Searchable> result = new TreeMap<>();
+    public Set<Searchable> search(String query) {
+        Set<Searchable> result = new TreeSet<>((s1, s2) -> {
+            int lengthCom = Integer.compare(s2.getName().length(),
+                    s1.getName().length());
+            if (lengthCom != 0) {
+                return lengthCom;
+            }
+            return s1.getName().compareTo(s2.getName());
+        });
         for (Searchable searchable : searchables) {
-            if (searchable != null && searchable.getSearchTerms().contains(query)) {
-                result.put(searchable.getName(), searchable);
+            if (searchable != null && searchable.getSearchTerms().toLowerCase().contains(query.toLowerCase())) {
+                result.add(searchable);
             }
         }
         return result;
@@ -50,21 +54,17 @@ public class SearchEngine {
         }
         return bestResult;
     }
+
     public void add(Searchable searchable) {
-        int freeIndex = getFreeIndex();
-        if (freeIndex == searchables.size()) {
-            searchables.add(searchable);
-        } else  {
-            searchables.set(freeIndex, searchable);
-        }
+        searchables.add(searchable);
     }
 
-    public int getFreeIndex() {
-        for (int i = 0; i < searchables.size(); i++) {
-            if (searchables.get(i) == null) {
-                return i;
-            }
-        }
-        return searchables.size();
-    }
+//    public int getFreeIndex() {
+//        for (int i = 0; i < searchables.size(); i++) {
+//            if (searchables.get(i) == null) {
+//                return i;
+//            }
+//        }
+//        return searchables.size();
+//    }
 }
