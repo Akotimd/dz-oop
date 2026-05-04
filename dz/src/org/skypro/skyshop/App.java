@@ -69,7 +69,7 @@ public class App {
         searchEngine.add(ballArtc);
         searchEngine.add(swordArtc);
 
-        Set<Searchable> found = searchEngine.search("Мяч");
+        Set<Searchable> found = searchEngine.search("Упругий");
         Set<Searchable> found1 = searchEngine.search("Меч");
         System.out.println("Найдено: " + found);
         System.out.println("Найдено: " + found1);
